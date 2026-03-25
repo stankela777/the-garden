@@ -92,6 +92,28 @@ the-garden/
 
 ---
 
+## Database Commands (inside the container)
+
+The development setup uses `Dockerfile.dev`, which installs all dependencies (including `drizzle-kit`) so database tools are available inside the running container.
+
+Run the following commands after `docker compose up --build`:
+
+```bash
+# Push Drizzle schema to the database
+docker compose exec backend npm run db:push
+
+# Seed the database with sample data
+docker compose exec backend npm run db:seed
+
+# Open Drizzle Studio (database UI)
+docker compose exec backend npm run db:studio
+```
+
+> **Note:** `docker-compose.yml` is configured to use `Dockerfile.dev` for local development.  
+> The production `Dockerfile` (multi-stage build, no devDependencies) is kept unchanged for production deployments.
+
+---
+
 ## Available npm Scripts
 
 ### Backend (`cd backend`)
