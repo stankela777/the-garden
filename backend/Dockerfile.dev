@@ -1,0 +1,19 @@
+# Development Dockerfile – installs all dependencies including devDependencies
+# This allows drizzle-kit and other dev tools to be available inside the container
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install all dependencies (including devDependencies for drizzle-kit, tsx, etc.)
+COPY package*.json ./
+RUN npm ci
+
+# Copy source files
+COPY tsconfig.json ./
+COPY drizzle.config.ts ./
+COPY src ./src
+
+EXPOSE 3000
+
+# Run in development mode with hot reload
+CMD ["npm", "run", "dev"]
